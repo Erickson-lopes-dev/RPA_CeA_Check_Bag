@@ -93,7 +93,7 @@ def auto_driver():
 
 
 def rpa(json_data):
-    driver = auto_driver()
+    driver = pl_driver()
 
     driver.get("https://www.cea.com.br/login")
 
