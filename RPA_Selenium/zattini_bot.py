@@ -7,11 +7,28 @@ import platform
 import os
 
 
-def auto_driver():
-    chromedriver_autoinstaller.install()
+def selenoid_remote_connection():
+    capabilities = {
+        "browserName": "chrome",
+        "browserVersion": "89.0",
+        "selenoid:options": {
+            "enableVNC": True,
+            "enableVideo": False
+        }
+    }
+
+    driver = webdriver.Remote(
+        command_executor="http://localhost:4444/wd/hub",
+        desired_capabilities=capabilities)
+
+    return driver
+
+
+def exe_driver():
     chrome_options = Options()
     chrome_options.add_argument("-headless")
-    return webdriver.Chrome(options=chrome_options)
+
+    return webdriver.Chrome('chromedriver.exe', options=chrome_options)
 
 
 def pl_driver():
@@ -63,8 +80,20 @@ def pl_driver():
     return driver
 
 
+def auto_driver():
+    chromedriver_autoinstaller.install()
+    chrome_options = Options()
+
+    chrome_options.add_argument("-headless")
+    chrome_options.add_argument('--log-level=3')
+    chrome_options.add_argument('--disable-gpu')
+    chrome_options.add_argument('--disable-dev-shm-usage')
+
+    return webdriver.Chrome(options=chrome_options)
+
+
 def rpa(json_data):
-    driver = pl_driver()
+    driver = auto_driver()
 
     driver.get("https://www.cea.com.br/login")
 
