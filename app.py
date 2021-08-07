@@ -13,10 +13,17 @@ def hello():
 
 @app.route('/rpa', methods=['POST'])
 def rpa_cea():
-    start = time.time()
-    json_data = json.loads(request.data)
-    result = rpa(json_data)
-    result["temp"] = "--- %s seconds ---" % (round(time.time() - start, 2))
+
+    result = {}
+
+    try:
+        start = time.time()
+        json_data = json.loads(request.data)
+        result = rpa(json_data)
+        result["temp"] = "--- %s seconds ---" % (round(time.time() - start, 2))
+    except Exception as error:
+        result['error'] = error
+
     return jsonify(result)
 
 
