@@ -2,7 +2,6 @@ from time import sleep
 from selenium.webdriver.chrome.options import Options
 import chromedriver_autoinstaller
 from selenium import webdriver
-import time
 import platform
 import os
 

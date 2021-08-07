@@ -6,12 +6,12 @@ import time
 app = Flask(__name__)
 
 
-@app.route('/teste', methods=['GET'])
+@app.route('/', methods=['GET'])
 def hello():
     return "<h1> Estou funcionando! </h1>"
 
 
-@app.route('/', methods=['POST'])
+@app.route('/rpa', methods=['POST'])
 def rpa_cea():
     start = time.time()
     json_data = json.loads(request.data)
