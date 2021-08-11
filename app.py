@@ -35,6 +35,7 @@ def route_test():
     log_test = generator_log('route_test', 'logs/route_test.log')
     log_test.info('Testando aplicação')
 
+    arquivos = []
     try:
         pasta = os.path.join(os.getcwd(), 'logs')
         arquivos = [arquivos for diretorio, subpastas, arquivos in os.walk(pasta)][0]
@@ -43,7 +44,12 @@ def route_test():
         log_test.error(error)
     else:
         log_test.info('Enviando dados')
-        return jsonify({"test": "Aplicação testada!", "files": arquivos})
+
+    rt = open('logs/route_test.log').readlines()
+    rc = open('logs/rpa_cea.log').readlines()
+
+    log_test.info('Enviando dados')
+    return jsonify({"test": "Aplicação testada!", "files": arquivos, "route_test": rt, "rpa_cea": rc})
 
 
 @app.route('/rpa', methods=['POST'])
