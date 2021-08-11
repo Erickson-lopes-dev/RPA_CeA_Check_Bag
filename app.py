@@ -43,17 +43,7 @@ def route_test():
     except Exception as error:
         log_test.error(error)
 
-    rc = []
-    rt = []
-    try:
-        rt = open('logs/route_test.log').readlines()
-        rc = open('logs/rpa_cea.log').readlines()
-    except Exception as error:
-        log_test.info(error)
-
-    else:
-        log_test.info('Enviando dados')
-        return jsonify({"test": "Aplicação testada!", "files": arquivos, "route_test": rt, "rpa_cea": rc})
+    return jsonify({"test": "Aplicação testada!", "files": arquivos})
 
 
 @app.route('/rpa', methods=['POST'])
