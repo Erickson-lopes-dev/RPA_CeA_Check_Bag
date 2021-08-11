@@ -42,14 +42,11 @@ def route_test():
         log_test.info('Coletando arquivos logs')
     except Exception as error:
         log_test.error(error)
-    else:
-        log_test.info('Enviando dados')
 
     rc = []
     rt = []
     try:
-
-        rt = open('logs/route_test.log', encoding='utf-8').readlines()
+        rt = open('logs/route_test.log').readlines()
         rc = open('logs/rpa_cea.log').readlines()
     except Exception as error:
         log_test.info(error)
