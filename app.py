@@ -3,6 +3,7 @@ from RPA_Selenium.zattini_bot import rpa
 import logging
 import json
 import time
+import os
 
 app = Flask(__name__)
 
@@ -31,14 +32,23 @@ def generator_log(name, path_file):
 
 @app.route('/', methods=['GET'])
 def route_test():
-    log_test = generator_log('route_test', 'route_test.log')
+    log_test = generator_log('route_test', 'logs/route_test.log')
     log_test.info('Testando aplicação')
-    return jsonify({"test": "Aplicação testada!"})
+
+    try:
+        pasta = os.path.join(os.getcwd(), 'logs')
+        arquivos = [arquivos for diretorio, subpastas, arquivos in os.walk(pasta)][0]
+        log_test.info('Coletando arquivos logs')
+    except Exception as error:
+        log_test.error(error)
+    else:
+        log_test.info('Enviando dados')
+        return jsonify({"test": "Aplicação testada!", "files": arquivos})
 
 
 @app.route('/rpa', methods=['POST'])
 def rpa_cea():
-    log_cea = generator_log('rpa_cea', 'RPA_Selenium/rpa_cea.log')
+    log_cea = generator_log('rpa_cea', 'logs/rpa_cea.log')
     log_cea.info('Acessando rota - /rpa')
     result = {}
 
