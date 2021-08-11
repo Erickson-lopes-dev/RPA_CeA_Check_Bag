@@ -1,31 +1,59 @@
 from flask import Flask, request, jsonify
 from RPA_Selenium.zattini_bot import rpa
+import logging
 import json
 import time
 
 app = Flask(__name__)
 
 
+def generator_log(name, path_file):
+    loggers = {}
+
+    if loggers.get(name):
+        return loggers.get(name)
+    else:
+        logger = logging.getLogger(name)
+        handler = logging.FileHandler(f'{path_file}')
+        formatter = logging.Formatter('[%(levelname)s] [%(message)s] [%(asctime)s]')
+        handler.setFormatter(formatter)
+        logger.addHandler(handler)
+        logger.setLevel(logging.DEBUG)
+        loggers[name] = logger
+
+        if logger.hasHandlers():
+            logger.handlers.clear()
+
+        logger.addHandler(handler)
+
+        return logger
+
+
 @app.route('/', methods=['GET'])
-def hello():
-    return "<h1> Estou funcionando! </h1>"
+def route_test():
+    log_test = generator_log('route_test', 'route_test.log')
+    log_test.info('Testando aplicação')
+    return jsonify({"test": "Aplicação testada!"})
 
 
 @app.route('/rpa', methods=['POST'])
 def rpa_cea():
-
+    log_cea = generator_log('rpa_cea', 'RPA_Selenium/rpa_cea.log')
+    log_cea.info('Acessando rota - /rpa')
     result = {}
 
     try:
         start = time.time()
         json_data = json.loads(request.data)
-        result = rpa(json_data)
+        log_cea.info('Carregando dados da request.data')
+        result = rpa(json_data, log_cea)
         result["temp"] = "--- %s seconds ---" % (round(time.time() - start, 2))
     except Exception as error:
+        log_cea.error('Erro Fatal')
         result['error'] = error
 
     return jsonify(result)
 
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(debug=False)
