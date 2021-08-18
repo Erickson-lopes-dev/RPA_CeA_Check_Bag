@@ -1,0 +1,7 @@
+[INFO] [Acessando rota - /rpa] [2021-08-18 11:40:46,072]
+[INFO] [Carregando dados da request.data] [2021-08-18 11:40:46,072]
+[WARNING] [Iniciando web scraping - C:\Be3\My_Projects\RPA_CeA_Check_Bag\RPA_Selenium\zattini_bot.py] [2021-08-18 11:40:46,073]
+[INFO] [Entrando na página - C:\Be3\My_Projects\RPA_CeA_Check_Bag\RPA_Selenium\zattini_bot.py] [2021-08-18 11:40:54,597]
+[INFO] [Campos preenchidos - C:\Be3\My_Projects\RPA_CeA_Check_Bag\RPA_Selenium\zattini_bot.py] [2021-08-18 11:40:56,990]
+[INFO] [Verificando sacola - C:\Be3\My_Projects\RPA_CeA_Check_Bag\RPA_Selenium\zattini_bot.py] [2021-08-18 11:41:08,900]
+[WARNING] [Fechando - C:\Be3\My_Projects\RPA_CeA_Check_Bag\RPA_Selenium\zattini_bot.py] [2021-08-18 11:41:11,355]
