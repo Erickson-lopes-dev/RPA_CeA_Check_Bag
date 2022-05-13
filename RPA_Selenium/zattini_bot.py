@@ -43,32 +43,29 @@ def auto_driver():
     return webdriver.Chrome(options=chrome_options)
 
 
-def rpa(json_data, log_cea):
+def rpa(json_data):
     try:
-        log_cea.warning(f'Iniciando web scraping - {__file__}',)
-        driver = auto_driver()
+        driver = heroku_driver()
 
         driver.get("https://www.cea.com.br/login")
-        log_cea.info(f'Entrando na página - {__file__}')
 
         sleep(1)
         driver.find_element_by_xpath('//*[@id="L_email"]').send_keys(json_data['email'])
         sleep(1)
         driver.find_element_by_xpath('//*[@id="L_senha"]').send_keys(json_data['password'])
         driver.find_element_by_xpath('//*[@id="enviar"]').click()
-        log_cea.info(f'Campos preenchidos - {__file__}')
+
         sleep(2)
         driver.get('https://www.cea.com.br/checkout#/cart')
         sleep(2)
-        log_cea.info(f'Verificando sacola - {__file__}')
+
         texto = driver.find_element_by_xpath('//*[@id="cartLoadedDiv"]/div[1]/h2').text
 
         driver.close()
         driver.quit()
-        log_cea.warning(f'Fechando - {__file__}')
 
     except Exception as error:
-        log_cea.error(error)
+        return {'status': f"ERRo {str(error)} {str(type(error))}"}
 
     else:
         return {"status": (True, False)['sua sacola está vazia' in texto]}
